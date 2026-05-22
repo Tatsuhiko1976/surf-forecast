@@ -83,7 +83,7 @@
     .wave-big{font-size:1.4rem;font-weight:800;color:var(--accent);line-height:1}
     .wave-big span{font-size:.65rem;color:var(--muted);font-weight:400}
     .score-label-sm{font-size:.65rem;color:var(--muted)}
-    .star-btn{background:none;border:none;cursor:pointer;font-size:1rem;padding:2px;line-height:1;opacity:.5;transition:all .2s}
+    .star-btn{background:none;border:none;color:var(--text);cursor:pointer;font-size:1.1rem;padding:2px 4px;line-height:1;opacity:.45;transition:all .2s}
     .star-btn:hover,.star-btn.on{opacity:1}
     .chevron{color:var(--muted);font-size:.8rem;transition:transform .2s}
     .spot-card.open .chevron{transform:rotate(180deg)}
@@ -112,7 +112,7 @@
     .tide-section{margin-top:12px}
     .tide-title{font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
     .tide-chart-wrap{position:relative;background:var(--surface2);border-radius:10px;padding:8px 10px}
-    .tide-svg{width:100%;height:50px;display:block}
+    .tide-svg{width:100%;height:58px;display:block}
     .tide-info-row{display:flex;gap:12px;margin-top:8px;font-size:.72rem}
     .tide-info-item{display:flex;flex-direction:column;gap:2px}
     .tide-info-lbl{color:var(--muted);font-size:.6rem}
@@ -157,29 +157,9 @@
     .legend-item{display:flex;align-items:center;gap:5px}
     .ldot{width:7px;height:7px;border-radius:50%}
 
-    /* AI Chat */
-    #chatFab{position:fixed;bottom:24px;right:24px;width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,#0ea5e9,#3b82f6);border:none;color:#fff;font-size:1.35rem;cursor:pointer;box-shadow:0 4px 16px rgba(14,165,233,.45);z-index:1000;display:flex;align-items:center;justify-content:center;transition:transform .2s}
-    #chatFab:hover{transform:scale(1.08)}
-    #chatPanel{position:fixed;bottom:90px;right:20px;width:360px;max-width:calc(100vw - 32px);background:var(--surface);border:1px solid var(--border);border-radius:18px;box-shadow:0 8px 32px rgba(0,0,0,.5);z-index:999;display:none;flex-direction:column;max-height:calc(100vh - 120px);overflow:hidden}
-    #chatPanel.open{display:flex}
-    .chat-header{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-    .chat-header-title{font-size:.85rem;font-weight:700;display:flex;align-items:center;gap:8px;color:var(--accent)}
-    .chat-close{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.1rem;padding:2px 4px}
-    .chat-msgs{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px;min-height:0}
-    .chat-bubble{padding:9px 13px;border-radius:14px;font-size:.82rem;line-height:1.55;max-width:88%;word-break:break-word;white-space:pre-wrap}
-    .chat-bubble.user{background:linear-gradient(135deg,#0ea5e9,#3b82f6);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
-    .chat-bubble.ai{background:var(--surface2);color:var(--text);align-self:flex-start;border-bottom-left-radius:4px}
-    .chat-bubble.ai.streaming::after{content:'▌';animation:blink .6s step-end infinite;color:var(--accent)}
-    @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-    .chat-bubble.error{background:rgba(248,113,113,.1);color:var(--red)}
-    .chat-presets{padding:8px 12px;display:flex;gap:6px;flex-wrap:wrap;border-top:1px solid var(--border)}
-    .preset-chip{background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:20px;padding:5px 11px;font-size:.72rem;cursor:pointer;transition:all .2s;white-space:nowrap}
-    .preset-chip:hover{border-color:var(--accent);color:var(--accent)}
-    .chat-input-row{padding:10px 12px;border-top:1px solid var(--border);display:flex;gap:8px;align-items:center}
-    #chatInput{flex:1;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:8px 11px;font-size:.8rem;outline:none;resize:none;font-family:inherit;line-height:1.4}
-    #chatInput:focus{border-color:var(--accent)}
-    #chatSendBtn{background:linear-gradient(135deg,#0ea5e9,#3b82f6);border:none;color:#fff;border-radius:10px;width:36px;height:36px;cursor:pointer;font-size:1rem;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:opacity .2s}
-    #chatSendBtn:disabled{opacity:.4;cursor:default}
+    /* Weather tag */
+    .t-weather{background:rgba(251,191,36,.08);color:#fde68a}
+    .t-sea{background:rgba(56,189,248,.08);color:#7dd3fc}
   </style>
 </head>
 <body>
@@ -189,7 +169,7 @@
     <div class="header-title">
       <span style="font-size:1.5rem">🌊</span>
       <div>
-        <h1>サーフ波予報</h1>
+        <h1>Surf-Forecast</h1>
         <small>福島 · 茨城 · 千葉 — 7.0 ミッドレングス</small>
       </div>
     </div>
@@ -209,10 +189,11 @@
 <div class="tabs">
   <div class="tabs-inner">
     <div class="tab active" data-view="all" onclick="setTab(this,'all')">全スポット</div>
-    <div class="tab" data-view="fukushima" onclick="setTab(this,'fukushima')">福島県</div>
-    <div class="tab" data-view="ibaraki" onclick="setTab(this,'ibaraki')">茨城県</div>
-    <div class="tab" data-view="chiba" onclick="setTab(this,'chiba')">千葉県</div>
     <div class="tab" data-view="favorites" onclick="setTab(this,'favorites')">⭐ お気に入り</div>
+    <div class="tab" data-view="fukushima" onclick="setTab(this,'fukushima')">福島</div>
+    <div class="tab" data-view="ibaraki" onclick="setTab(this,'ibaraki')">茨城</div>
+    <div class="tab" data-view="chiba_north" onclick="setTab(this,'chiba_north')">千葉北</div>
+    <div class="tab" data-view="chiba_south" onclick="setTab(this,'chiba_south')">千葉南</div>
     <div class="tab" data-view="map" onclick="setTab(this,'map')">🗺 地図</div>
   </div>
 </div>
@@ -249,29 +230,6 @@
   </div>
 </div>
 
-<!-- AI Chat FAB + Panel -->
-<button id="chatFab" onclick="toggleChat()" title="AIサーフアドバイザー">🤙</button>
-
-<div id="chatPanel">
-  <div class="chat-header">
-    <div class="chat-header-title">🤖 AIサーフアドバイザー</div>
-    <button class="chat-close" onclick="toggleChat()">✕</button>
-  </div>
-  <div class="chat-msgs" id="chatMsgs">
-    <div class="chat-bubble ai">こんにちは！波予報について何でも聞いてください。例：「今日はどこのポイントが良さそう？」</div>
-  </div>
-  <div class="chat-presets" id="chatPresets">
-    <div class="preset-chip" onclick="usePreset(this.textContent)">今日おすすめは？</div>
-    <div class="preset-chip" onclick="usePreset(this.textContent)">この後どこが良くなる？</div>
-    <div class="preset-chip" onclick="usePreset(this.textContent)">明日の波は？</div>
-    <div class="preset-chip" onclick="usePreset(this.textContent)">風が良いのは？</div>
-  </div>
-  <div class="chat-input-row">
-    <textarea id="chatInput" rows="1" placeholder="質問を入力…" onkeydown="chatKeydown(event)"></textarea>
-    <button id="chatSendBtn" onclick="sendChat()">➤</button>
-  </div>
-</div>
-
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 // ═══════════════════════════════════════════════════
@@ -286,16 +244,16 @@ const SPOTS = [
     lat:37.040, lon:141.057, facing:95,  tideAmp:0.55, tideOfs:2.0,
     feature:'塩屋崎灯台そば・パワフルな波質' },
   { id:'yotsukura',   name:'四倉',        pref:'fukushima', prefName:'福島県',
-    lat:37.060, lon:141.009, facing:90,  tideAmp:0.55, tideOfs:2.0,
+    lat:37.104, lon:140.991, facing:90,  tideAmp:0.55, tideOfs:2.0,
     feature:'いわき北部・Tバーでサンドバー安定' },
   { id:'hisanohama',  name:'久之浜',      pref:'fukushima', prefName:'福島県',
-    lat:37.052, lon:141.001, facing:88,  tideAmp:0.55, tideOfs:2.0,
+    lat:37.139, lon:140.999, facing:88,  tideAmp:0.55, tideOfs:2.0,
     feature:'外洋うねりを受けやすいビーチ' },
   { id:'hirono',      name:'広野',        pref:'fukushima', prefName:'福島県',
     lat:37.213, lon:141.013, facing:87,  tideAmp:0.55, tideOfs:2.1,
     feature:'ロングライド向けなだらかビーチ' },
   { id:'nakoso',      name:'勿来',        pref:'fukushima', prefName:'福島県',
-    lat:36.920, lon:140.871, facing:90,  tideAmp:0.55, tideOfs:2.0,
+    lat:36.867, lon:140.789, facing:90,  tideAmp:0.55, tideOfs:2.0,
     feature:'リーフ混じりビーチブレイク' },
 
   // ── 茨城県（北から南）──
@@ -306,76 +264,90 @@ const SPOTS = [
     lat:36.712, lon:140.716, facing:90,  tideAmp:0.58, tideOfs:2.2,
     feature:'パワフルなビーチブレイク' },
   { id:'hitachi',     name:'日立',        pref:'ibaraki', prefName:'茨城県',
-    lat:36.587, lon:140.651, facing:90,  tideAmp:0.60, tideOfs:2.2,
+    lat:36.544, lon:140.646, facing:90,  tideAmp:0.60, tideOfs:2.2,
     feature:'リーフあり・パワフルな波質' },
   { id:'ajigaura',    name:'阿字ヶ浦',    pref:'ibaraki', prefName:'茨城県',
     lat:36.392, lon:140.588, facing:100, tideAmp:0.62, tideOfs:2.3,
     feature:'SE方向に開く・多様なサンドバー' },
   { id:'oarai',       name:'大洗',        pref:'ibaraki', prefName:'茨城県',
-    lat:36.308, lon:140.630, facing:88,  tideAmp:0.62, tideOfs:2.3,
+    lat:36.303, lon:140.568, facing:88,  tideAmp:0.62, tideOfs:2.3,
     feature:'コンスタントビーチ・初中級者向け' },
   { id:'otake',       name:'大竹',        pref:'ibaraki', prefName:'茨城県',
-    lat:36.193, lon:140.668, facing:88,  tideAmp:0.63, tideOfs:2.3,
+    lat:36.158, lon:140.580, facing:88,  tideAmp:0.63, tideOfs:2.3,
     feature:'鉾田エリア北部・広大なビーチ' },
   { id:'topsante',    name:'トップサンテ', pref:'ibaraki', prefName:'茨城県',
-    lat:36.115, lon:140.730, facing:85,  tideAmp:0.63, tideOfs:2.3,
+    lat:36.087, lon:140.604, facing:85,  tideAmp:0.63, tideOfs:2.3,
     feature:'茨城最大の人気スポット・北側NE・南側SE' },
   { id:'hirai',       name:'平井',        pref:'ibaraki', prefName:'茨城県',
-    lat:35.978, lon:140.831, facing:87,  tideAmp:0.65, tideOfs:2.3,
+    lat:35.964, lon:140.669, facing:87,  tideAmp:0.65, tideOfs:2.3,
     feature:'鹿嶋エリア代表・初心者〜中級者向き砂浜' },
   { id:'sakata',      name:'坂田',        pref:'ibaraki', prefName:'茨城県',
-    lat:35.952, lon:140.841, facing:87,  tideAmp:0.65, tideOfs:2.3,
+    lat:35.952, lon:140.672, facing:87,  tideAmp:0.65, tideOfs:2.3,
     feature:'ヘッドランド利用・多様なサンドバー' },
   { id:'akashi',      name:'明石',        pref:'ibaraki', prefName:'茨城県',
-    lat:35.935, lon:140.843, facing:87,  tideAmp:0.65, tideOfs:2.3,
+    lat:35.935, lon:140.675, facing:87,  tideAmp:0.65, tideOfs:2.3,
     feature:'Tバーによる安定サンドバー形成' },
   { id:'nikkawahama', name:'日川浜',      pref:'ibaraki', prefName:'茨城県',
-    lat:35.903, lon:140.839, facing:87,  tideAmp:0.65, tideOfs:2.4,
+    lat:35.872, lon:140.739, facing:87,  tideAmp:0.65, tideOfs:2.4,
     feature:'神栖市・ロングライド向けメロウな波' },
   { id:'hasaki',      name:'波崎',        pref:'ibaraki', prefName:'茨城県',
-    lat:35.768, lon:140.833, facing:85,  tideAmp:0.65, tideOfs:2.4,
+    lat:35.753, lon:140.833, facing:85,  tideAmp:0.65, tideOfs:2.4,
     feature:'利根川河口近く・多様サンドバー' },
 
-  // ── 千葉県（北から南）──
-  { id:'iinoka',      name:'飯岡',        pref:'chiba', prefName:'千葉県',
-    lat:35.793, lon:140.716, facing:75,  tideAmp:0.68, tideOfs:2.5,
-    feature:'九十九里北端・コンスタントビーチ' },
-  { id:'choshi',      name:'銚子',        pref:'chiba', prefName:'千葉県',
-    lat:35.728, lon:140.869, facing:70,  tideAmp:0.68, tideOfs:2.5,
+  // ── 千葉北（北から南）──
+  { id:'choshi',      name:'銚子',        pref:'chiba_north', prefName:'千葉北',
+    lat:35.728, lon:140.869, facing:145, tideAmp:0.68, tideOfs:2.5,
     feature:'NE系に強い・冬がベストシーズン' },
-  { id:'shirako',     name:'白子',        pref:'chiba', prefName:'千葉県',
-    lat:35.664, lon:140.567, facing:90,  tideAmp:0.70, tideOfs:2.6,
-    feature:'A-frame波・E/SEうねりベスト' },
-  { id:'katakai',     name:'片貝',        pref:'chiba', prefName:'千葉県',
-    lat:35.607, lon:140.556, facing:92,  tideAmp:0.70, tideOfs:2.6,
+  { id:'iinoka',      name:'飯岡',        pref:'chiba_north', prefName:'千葉北',
+    lat:35.714, lon:140.697, facing:160, tideAmp:0.68, tideOfs:2.5,
+    feature:'九十九里北端・NE〜NW風でオフショア' },
+  { id:'sakuta',      name:'作田',        pref:'chiba_north', prefName:'千葉北',
+    lat:35.548, lon:140.472, facing:93,  tideAmp:0.69, tideOfs:2.5,
+    feature:'片貝北隣・遠浅ビーチ・初中級者向き' },
+  { id:'katakai',     name:'片貝',        pref:'chiba_north', prefName:'千葉北',
+    lat:35.528, lon:140.453, facing:92,  tideAmp:0.70, tideOfs:2.6,
     feature:'防波堤でサンドバー形成・人気エリア' },
-  { id:'kujukuri',    name:'九十九里',    pref:'chiba', prefName:'千葉県',
-    lat:35.503, lon:140.531, facing:95,  tideAmp:0.70, tideOfs:2.6,
+  { id:'kujukuri',    name:'九十九里',    pref:'chiba_north', prefName:'千葉北',
+    lat:35.493, lon:140.437, facing:95,  tideAmp:0.70, tideOfs:2.6,
     feature:'日本最長ビーチ・広大なビーチブレイク' },
-  { id:'ichinomiya',  name:'一宮',        pref:'chiba', prefName:'千葉県',
+  { id:'shirako',     name:'白子',        pref:'chiba_north', prefName:'千葉北',
+    lat:35.455, lon:140.415, facing:90,  tideAmp:0.70, tideOfs:2.6,
+    feature:'A-frame波・E/SEうねりベスト' },
+  { id:'ichinomiya',  name:'一宮',        pref:'chiba_north', prefName:'千葉北',
     lat:35.384, lon:140.373, facing:100, tideAmp:0.72, tideOfs:2.7,
     feature:'東京五輪開催地・コンスタントな波質' },
-  { id:'shidashita',  name:'志田下',      pref:'chiba', prefName:'千葉県',
+  { id:'shidashita',  name:'志田下',      pref:'chiba_north', prefName:'千葉北',
     lat:35.330, lon:140.375, facing:100, tideAmp:0.72, tideOfs:2.7,
     feature:'2021年東京五輪会場・高品質な波' },
-  { id:'ohara',       name:'大原',        pref:'chiba', prefName:'千葉県',
+  { id:'ohara',       name:'大原',        pref:'chiba_north', prefName:'千葉北',
     lat:35.252, lon:140.382, facing:105, tideAmp:0.72, tideOfs:2.7,
     feature:'ロングボード向けメロウな波質' },
-  { id:'onjuku',      name:'御宿',        pref:'chiba', prefName:'千葉県',
+
+  // ── 千葉南（外房・内房 北から南）──
+  { id:'onjuku',      name:'御宿',        pref:'chiba_south', prefName:'千葉南',
     lat:35.133, lon:140.372, facing:112, tideAmp:0.75, tideOfs:2.8,
-    feature:'水温高め・外房コンスタント' },
-  { id:'katsuura',    name:'勝浦',        pref:'chiba', prefName:'千葉県',
+    feature:'外房・水温高め・コンスタント' },
+  { id:'katsuura',    name:'勝浦',        pref:'chiba_south', prefName:'千葉南',
     lat:35.135, lon:140.302, facing:120, tideAmp:0.75, tideOfs:2.8,
     feature:'外房の名スポット・多様な波質' },
-  { id:'kamogawa',    name:'鴨川',        pref:'chiba', prefName:'千葉県',
-    lat:35.103, lon:140.103, facing:130, tideAmp:0.75, tideOfs:2.9,
-    feature:'SE向き・静かな環境のビーチ' },
-  { id:'wada',        name:'和田',        pref:'chiba', prefName:'千葉県',
-    lat:34.993, lon:140.025, facing:150, tideAmp:0.80, tideOfs:3.0,
-    feature:'南向き・台風スウェルに最強' },
-  { id:'chikura',     name:'千倉',        pref:'chiba', prefName:'千葉県',
-    lat:34.979, lon:139.950, facing:160, tideAmp:0.80, tideOfs:3.0,
-    feature:'南〜南西向き・外洋うねり受ける' },
+  { id:'kamogawa',    name:'鴨川',        pref:'chiba_south', prefName:'千葉南',
+    lat:35.103, lon:140.103, facing:155, tideAmp:0.75, tideOfs:2.9,
+    feature:'外房南部・SE〜S向き静かなビーチ' },
+  { id:'wada',        name:'和田',        pref:'chiba_south', prefName:'千葉南',
+    lat:34.993, lon:140.025, facing:170, tideAmp:0.80, tideOfs:3.0,
+    feature:'外房南部・台風スウェルに最強' },
+  { id:'chikura',     name:'千倉',        pref:'chiba_south', prefName:'千葉南',
+    lat:34.979, lon:139.950, facing:180, tideAmp:0.80, tideOfs:3.0,
+    feature:'南端・南〜南西向き・外洋うねり受ける' },
+  { id:'tateyama',    name:'館山',        pref:'chiba_south', prefName:'千葉南',
+    lat:34.980, lon:139.870, facing:230, tideAmp:0.80, tideOfs:3.1,
+    feature:'内房南部・南西〜西向き・台風SW系に反応' },
+  { id:'iwai',        name:'岩井',        pref:'chiba_south', prefName:'千葉南',
+    lat:35.104, lon:139.851, facing:250, tideAmp:0.78, tideOfs:3.0,
+    feature:'内房・西〜南西向き・穏やかな波質' },
+  { id:'tomiura',     name:'富浦',        pref:'chiba_south', prefName:'千葉南',
+    lat:34.997, lon:139.828, facing:240, tideAmp:0.78, tideOfs:3.1,
+    feature:'内房・湾内のメロウなビーチブレイク' },
 ];
 
 // ═══════════════════════════════════════════════════
@@ -468,15 +440,29 @@ function tideCurvePoints(dateObj, spot) {
 
 function renderTideSvg(points, spot, currentHourFrac) {
   const A = spot.tideAmp * 1.35;
-  const W = 280, H = 48, PAD = 4;
+  const W = 280, H = 56, PAD = 4, TOP = 10;
   const toX = i => PAD + (i/(points.length-1))*(W-2*PAD);
-  const toY = v => H/2 - (v/A)*(H/2-PAD);
+  const toY = v => TOP + (H-TOP)/2 - (v/A)*((H-TOP)/2-PAD);
 
   const pathD = points.map((v,i) => `${i?'L':'M'}${toX(i).toFixed(1)},${toY(v).toFixed(1)}`).join('');
   const fillD = pathD + ` L${toX(points.length-1)},${H} L${PAD},${H}Z`;
   const cx = (PAD + currentHourFrac/24*(W-2*PAD)).toFixed(1);
   const cyRaw = tideAt(new Date().getTime(), spot);
   const cy = toY(cyRaw).toFixed(1);
+  const cmNow = Math.round(cyRaw * 100);
+  const cmLabel = (cmNow >= 0 ? '+' : '') + cmNow + 'cm';
+
+  // Find hi/lo in the day
+  const maxV = Math.max(...points);
+  const minV = Math.min(...points);
+  const maxCm = Math.round(maxV*100);
+  const minCm = Math.round(minV*100);
+  const maxX = toX(points.indexOf(maxV)).toFixed(1);
+  const minX = toX(points.indexOf(minV)).toFixed(1);
+
+  // Label position: keep inside SVG
+  const lblX = Math.min(W-28, Math.max(4, parseFloat(cx)-14));
+  const lblY = parseFloat(cy) > H/2 ? parseFloat(cy)-6 : parseFloat(cy)+14;
 
   return `<svg viewBox="0 0 ${W} ${H}" class="tide-svg">
     <defs>
@@ -487,9 +473,40 @@ function renderTideSvg(points, spot, currentHourFrac) {
     </defs>
     <path d="${fillD}" fill="url(#tg${spot.id})"/>
     <path d="${pathD}" stroke="#38bdf8" stroke-width="1.5" fill="none"/>
-    <line x1="${cx}" y1="2" x2="${cx}" y2="${H-2}" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="3,2" opacity=".8"/>
-    <circle cx="${cx}" cy="${cy}" r="3" fill="#fbbf24"/>
+    <text x="${maxX}" y="9" text-anchor="middle" fill="#7dd3fc" font-size="8" opacity=".8">+${maxCm}</text>
+    <text x="${minX}" y="${H-1}" text-anchor="middle" fill="#7dd3fc" font-size="8" opacity=".8">${minCm}</text>
+    <line x1="${cx}" y1="${TOP}" x2="${cx}" y2="${H-2}" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="3,2" opacity=".8"/>
+    <circle cx="${cx}" cy="${cy}" r="3.5" fill="#fbbf24"/>
+    <text x="${lblX}" y="${lblY}" fill="#fbbf24" font-size="9" font-weight="bold">${cmLabel}</text>
   </svg>`;
+}
+
+// ═══════════════════════════════════════════════════
+// WEATHER HELPERS
+// ═══════════════════════════════════════════════════
+function weatherEmoji(code) {
+  if (code === 0)          return '☀️';
+  if (code <= 1)           return '🌤';
+  if (code <= 2)           return '⛅';
+  if (code <= 3)           return '☁️';
+  if (code <= 48)          return '🌫';
+  if (code <= 55)          return '🌦';
+  if (code <= 65)          return '🌧';
+  if (code <= 77)          return '❄️';
+  if (code <= 82)          return '🌦';
+  return '⛈';
+}
+function weatherDesc(code) {
+  if (code === 0)  return '快晴';
+  if (code <= 1)   return '晴れ';
+  if (code <= 2)   return '晴れ曇';
+  if (code <= 3)   return '曇り';
+  if (code <= 48)  return '霧';
+  if (code <= 55)  return '小雨';
+  if (code <= 65)  return '雨';
+  if (code <= 77)  return '雪';
+  if (code <= 82)  return 'にわか雨';
+  return '雷雨';
 }
 
 // ═══════════════════════════════════════════════════
@@ -594,8 +611,8 @@ function windLabel(dir, facing) {
 async function fetchSpot(spot) {
   const base = `latitude=${spot.lat}&longitude=${spot.lon}&timezone=Asia%2FTokyo&forecast_days=${FORECAST_DAYS}`;
   const [mr, wr] = await Promise.all([
-    fetch(`https://marine-api.open-meteo.com/v1/marine?${base}&hourly=wave_height,wave_direction,wave_period,swell_wave_height,swell_wave_period,swell_wave_direction`),
-    fetch(`https://api.open-meteo.com/v1/forecast?${base}&hourly=wind_speed_10m,wind_direction_10m,wind_gusts_10m`)
+    fetch(`https://marine-api.open-meteo.com/v1/marine?${base}&hourly=wave_height,wave_direction,wave_period,swell_wave_height,swell_wave_period,swell_wave_direction,sea_surface_temperature`),
+    fetch(`https://api.open-meteo.com/v1/forecast?${base}&hourly=wind_speed_10m,wind_direction_10m,wind_gusts_10m,weather_code,temperature_2m&wind_speed_unit=ms`)
   ]);
   const [m, w] = await Promise.all([mr.json(), wr.json()]);
 
@@ -608,6 +625,9 @@ async function fetchSpot(spot) {
     const ws  = w.hourly.wind_speed_10m[i]    ?? 0;
     const wdir= w.hourly.wind_direction_10m[i]?? 0;
     const wg  = w.hourly.wind_gusts_10m[i]    ?? 0;
+    const wcode = w.hourly.weather_code[i]    ?? 0;
+    const temp  = w.hourly.temperature_2m[i]  ?? 0;
+    const sst   = m.hourly.sea_surface_temperature?.[i] ?? null;
     const date= new Date(t);
 
     const hs = scoreWaveHeight(wh);
@@ -619,6 +639,7 @@ async function fetchSpot(spot) {
     return { time:t, date, waveHeight:wh, wavePeriod:wp, waveDir:wd,
              swellHeight:sh, swellPeriod:sp,
              windSpeed:ws, windDir:wdir, windGust:wg,
+             weatherCode:wcode, temperature:temp, seaTemp:sst,
              hs, ps, ws:ws2, crowd, total };
   });
 }
@@ -922,6 +943,8 @@ function render() {
               <span class="tag ${wl.cls}">${windArrow(rep.windDir)} ${wl.text}</span>
               <span class="tag ${rep.crowd.cls}">${rep.crowd.emoji} ${rep.crowd.label}</span>
               ${tideTag}
+              <span class="tag t-weather">${weatherEmoji(rep.weatherCode)} ${Math.round(rep.temperature)}℃</span>
+              ${rep.seaTemp!=null?`<span class="tag t-sea">🌊 水温 ${Math.round(rep.seaTemp)}℃</span>`:''}
             </div>
           </div>
         </div>
@@ -940,6 +963,10 @@ function render() {
           <div class="metric"><div class="metric-lbl">風向</div><div class="metric-val" style="font-size:.85rem">${windArrow(rep.windDir)} ${windJp(rep.windDir)}</div></div>
           <div class="metric"><div class="metric-lbl">うねり高</div><div class="metric-val" style="color:var(--accent)">${rep.swellHeight.toFixed(1)}<span class="metric-unit">m</span></div></div>
           <div class="metric"><div class="metric-lbl">うねり周期</div><div class="metric-val" style="color:var(--green)">${rep.swellPeriod.toFixed(0)}<span class="metric-unit">s</span></div></div>
+          <div class="metric"><div class="metric-lbl">天気</div><div class="metric-val" style="font-size:.9rem">${weatherEmoji(rep.weatherCode)} ${weatherDesc(rep.weatherCode)}</div></div>
+          <div class="metric"><div class="metric-lbl">気温</div><div class="metric-val" style="color:var(--yellow)">${Math.round(rep.temperature)}<span class="metric-unit">℃</span></div></div>
+          ${rep.seaTemp!=null?`<div class="metric"><div class="metric-lbl">水温</div><div class="metric-val" style="color:#38bdf8">${Math.round(rep.seaTemp)}<span class="metric-unit">℃</span></div></div>`:''}
+
         </div>
 
         <div class="score-bars">
@@ -1039,166 +1066,9 @@ function renderDateNav() {
 
 function selectDate(idx) {
   currentDateIdx = idx;
-  ctxSent = false;  // re-send forecast context for new date
   renderDateNav();
   if (currentView==='map') updateMapMarkers();
   else render();
-}
-
-// ═══════════════════════════════════════════════════
-// AI CHAT
-// ═══════════════════════════════════════════════════
-let chatHistory = [];
-let chatOpen = false;
-let chatStreaming = false;
-let ctxSent = false;  // forecast context sent in first message only
-
-function toggleChat() {
-  chatOpen = !chatOpen;
-  const panel = document.getElementById('chatPanel');
-  panel.classList.toggle('open', chatOpen);
-  if (chatOpen) {
-    document.getElementById('chatInput').focus();
-  }
-}
-
-function usePreset(text) {
-  document.getElementById('chatInput').value = text;
-  sendChat();
-}
-
-function chatKeydown(e) {
-  if (e.key === 'Enter' && !e.shiftKey) {
-    e.preventDefault();
-    sendChat();
-  }
-}
-
-function buildChatCtx() {
-  const lines = ['=== 波予報サマリー ==='];
-  const dateList = getDateList();
-
-  SPOTS.forEach(spot => {
-    const hours = getHoursForDate(spot.id, currentDateIdx);
-    const rep = getRepHour(hours);
-    const best = getBestHour(hours);
-    if (!rep) return;
-
-    const sc = scoreClass(rep.total);
-    const scLabel = {great:'グレート',good:'グッド',fair:'フェア',poor:'プア',bad:'フラット'}[sc] || sc;
-    lines.push(
-      `【${spot.prefName} ${spot.name}】スコア:${rep.total}pts(${scLabel}) ` +
-      `波高:${rep.waveHeight.toFixed(1)}m 周期:${rep.wavePeriod.toFixed(0)}s ` +
-      `風:${rep.windSpeed.toFixed(0)}m/s ${rep.windDir}方向 ` +
-      `最高スコア:${best.total}pts(${best.date.getHours()}時頃)`
-    );
-  });
-
-  const dateLabel = currentDateIdx===0?'今日':currentDateIdx===1?'明日':
-    `${dateList[currentDateIdx].getMonth()+1}月${dateList[currentDateIdx].getDate()}日`;
-  lines.unshift(`対象日: ${dateLabel}`);
-  return lines.join('\n');
-}
-
-async function sendChat() {
-  if (chatStreaming) return;
-  const input = document.getElementById('chatInput');
-  const message = input.value.trim();
-  if (!message) return;
-
-  input.value = '';
-  input.style.height = '';
-
-  // Show user bubble
-  const msgsEl = document.getElementById('chatMsgs');
-  const userBubble = document.createElement('div');
-  userBubble.className = 'chat-bubble user';
-  userBubble.textContent = message;
-  msgsEl.appendChild(userBubble);
-
-  // AI bubble (streaming)
-  const aiBubble = document.createElement('div');
-  aiBubble.className = 'chat-bubble ai streaming';
-  aiBubble.textContent = '';
-  msgsEl.appendChild(aiBubble);
-  msgsEl.scrollTop = msgsEl.scrollHeight;
-
-  // Disable send
-  chatStreaming = true;
-  document.getElementById('chatSendBtn').disabled = true;
-  document.getElementById('chatPresets').style.opacity = '0.4';
-
-  // Context only in first message
-  const context = ctxSent ? '' : buildChatCtx();
-  ctxSent = true;
-
-  // Build payload
-  const payload = {
-    message,
-    context,
-    history: chatHistory.slice()
-  };
-
-  let fullText = '';
-
-  try {
-    const res = await fetch('/api/chat', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify(payload)
-    });
-
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
-    const reader = res.body.getReader();
-    const decoder = new TextDecoder();
-    let buf = '';
-
-    while (true) {
-      const {done, value} = await reader.read();
-      if (done) break;
-      buf += decoder.decode(value, {stream: true});
-
-      const parts = buf.split('\n\n');
-      buf = parts.pop();
-
-      for (const part of parts) {
-        const line = part.trim();
-        if (!line.startsWith('data:')) continue;
-        const data = line.slice(5).trim();
-        if (data === '[DONE]') continue;
-        try {
-          const obj = JSON.parse(data);
-          if (obj.error) {
-            aiBubble.textContent = obj.error;
-            aiBubble.classList.add('error');
-            fullText = '';
-          } else if (obj.text) {
-            fullText += obj.text;
-            aiBubble.textContent = fullText;
-          }
-        } catch (_) { /* skip malformed */ }
-        msgsEl.scrollTop = msgsEl.scrollHeight;
-      }
-    }
-  } catch (e) {
-    aiBubble.textContent = 'エラーが発生しました。サーバーが起動しているか確認してください。';
-    aiBubble.classList.add('error');
-  }
-
-  aiBubble.classList.remove('streaming');
-
-  // Update history (keep last 8 exchanges = 16 messages)
-  if (fullText) {
-    chatHistory.push({role:'user', content: message});
-    chatHistory.push({role:'assistant', content: fullText});
-    if (chatHistory.length > 16) chatHistory = chatHistory.slice(-16);
-  }
-
-  chatStreaming = false;
-  document.getElementById('chatSendBtn').disabled = false;
-  document.getElementById('chatPresets').style.opacity = '';
-  msgsEl.scrollTop = msgsEl.scrollHeight;
 }
 
 // ═══════════════════════════════════════════════════
