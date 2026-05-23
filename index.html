@@ -564,7 +564,7 @@ function scoreCrowd(spot, dateObj, waveQuality) {
 
   let base = dow===0||dow===6 ? 0.72 : dow===5 ? 0.50 : 0.30;
   const season = (mon>=7&&mon<=9) ? 1.4 : (mon>=3&&mon<=5) ? 1.1 : 1.0;
-  const timeF  = hour<7 ? .25 : hour<10 ? .90 : hour<14 ? 1.20 : hour<17 ? 1.00 : .55;
+  const timeF  = hour<5 ? .02 : hour<7 ? .15 : hour<10 ? .90 : hour<14 ? 1.20 : hour<17 ? 1.00 : hour<19 ? .55 : hour<21 ? .20 : .03;
   const waveF  = waveQuality>70 ? 1.35 : waveQuality>50 ? 1.15 : 0.80;
   const level  = Math.min(1, base*season*timeF*waveF);
   const score  = Math.max(0, Math.min(15, Math.round((1-level)*15)));
