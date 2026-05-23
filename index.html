@@ -160,6 +160,8 @@
     /* Weather tag */
     .t-weather{background:rgba(251,191,36,.08);color:#fde68a}
     .t-sea{background:rgba(56,189,248,.08);color:#7dd3fc}
+    .cam-btn{display:inline-flex;align-items:center;gap:4px;background:rgba(99,102,241,.15);color:#a5b4fc;border:1px solid rgba(99,102,241,.3);border-radius:6px;padding:3px 8px;font-size:.75rem;text-decoration:none;cursor:pointer;transition:background .2s}
+    .cam-btn:hover{background:rgba(99,102,241,.3)}
   </style>
 </head>
 <body>
@@ -239,7 +241,8 @@ const SPOTS = [
   // ── 福島県（北から南）──
   { id:'kitaizumi',   name:'北泉',        pref:'fukushima', prefName:'福島県',
     lat:37.508, lon:141.033, facing:90,  tideAmp:0.55, tideOfs:1.9,
-    feature:'南相馬・オープンビーチ・コンスタント' },
+    feature:'南相馬・オープンビーチ・コンスタント',
+    cam:'https://www.city.minamisoma.lg.jp/portal/sections/16/1630/3396.html' },
   { id:'usui',        name:'薄磯',        pref:'fukushima', prefName:'福島県',
     lat:37.040, lon:141.057, facing:95,  tideAmp:0.55, tideOfs:2.0,
     feature:'塩屋崎灯台そば・パワフルな波質' },
@@ -271,7 +274,8 @@ const SPOTS = [
     feature:'SE方向に開く・多様なサンドバー' },
   { id:'oarai',       name:'大洗',        pref:'ibaraki', prefName:'茨城県',
     lat:36.303, lon:140.568, facing:88,  tideAmp:0.62, tideOfs:2.3,
-    feature:'コンスタントビーチ・初中級者向け' },
+    feature:'コンスタントビーチ・初中級者向け',
+    cam:'http://www.oarai-info.jp/livecamera01/index.php' },
   { id:'otake',       name:'大竹',        pref:'ibaraki', prefName:'茨城県',
     lat:36.158, lon:140.580, facing:88,  tideAmp:0.63, tideOfs:2.3,
     feature:'鉾田エリア北部・広大なビーチ' },
@@ -280,7 +284,8 @@ const SPOTS = [
     feature:'茨城最大の人気スポット・北側NE・南側SE' },
   { id:'hirai',       name:'平井',        pref:'ibaraki', prefName:'茨城県',
     lat:35.964, lon:140.669, facing:87,  tideAmp:0.65, tideOfs:2.3,
-    feature:'鹿嶋エリア代表・初心者〜中級者向き砂浜' },
+    feature:'鹿嶋エリア代表・初心者〜中級者向き砂浜',
+    cam:'https://www.surfers-ocean.com/%E3%82%B5%E3%83%BC%E3%83%95%E3%82%A3%E3%83%B3%E6%B3%A2%E6%83%85%E5%A0%B1/%E5%B9%B3%E4%BA%95/' },
   { id:'sakata',      name:'坂田',        pref:'ibaraki', prefName:'茨城県',
     lat:35.952, lon:140.672, facing:87,  tideAmp:0.65, tideOfs:2.3,
     feature:'ヘッドランド利用・多様なサンドバー' },
@@ -297,28 +302,35 @@ const SPOTS = [
   // ── 千葉北（北から南）──
   { id:'choshi',      name:'銚子',        pref:'chiba_north', prefName:'千葉北',
     lat:35.728, lon:140.869, facing:145, tideAmp:0.68, tideOfs:2.5,
-    feature:'NE系に強い・冬がベストシーズン' },
+    feature:'NE系に強い・冬がベストシーズン',
+    cam:'https://www6.kaiho.mlit.go.jp/03kanku/choshi/inubosaki_lt/livecamera/index.html' },
   { id:'iinoka',      name:'飯岡',        pref:'chiba_north', prefName:'千葉北',
     lat:35.714, lon:140.697, facing:160, tideAmp:0.68, tideOfs:2.5,
-    feature:'九十九里北端・NE〜NW風でオフショア' },
+    feature:'九十九里北端・NE〜NW風でオフショア',
+    cam:'https://www.i92surf.com/iioka/' },
   { id:'sakuta',      name:'作田',        pref:'chiba_north', prefName:'千葉北',
     lat:35.548, lon:140.472, facing:93,  tideAmp:0.69, tideOfs:2.5,
     feature:'片貝北隣・遠浅ビーチ・初中級者向き' },
   { id:'katakai',     name:'片貝',        pref:'chiba_north', prefName:'千葉北',
     lat:35.528, lon:140.453, facing:92,  tideAmp:0.70, tideOfs:2.6,
-    feature:'防波堤でサンドバー形成・人気エリア' },
+    feature:'防波堤でサンドバー形成・人気エリア',
+    cam:'https://www.surfers-ocean.com/%E3%82%B5%E3%83%BC%E3%83%95%E3%82%A3%E3%83%B3%E6%B3%A2%E6%83%85%E5%A0%B1/%E7%89%87%E8%B2%9D/' },
   { id:'kujukuri',    name:'九十九里',    pref:'chiba_north', prefName:'千葉北',
     lat:35.493, lon:140.437, facing:95,  tideAmp:0.70, tideOfs:2.6,
-    feature:'日本最長ビーチ・広大なビーチブレイク' },
+    feature:'日本最長ビーチ・広大なビーチブレイク',
+    cam:'https://www.town.kujukuri.chiba.jp/0000000245.html' },
   { id:'shirako',     name:'白子',        pref:'chiba_north', prefName:'千葉北',
     lat:35.455, lon:140.415, facing:90,  tideAmp:0.70, tideOfs:2.6,
-    feature:'A-frame波・E/SEうねりベスト' },
+    feature:'A-frame波・E/SEうねりベスト',
+    cam:'https://www.surfers-ocean.com/%E3%82%B5%E3%83%BC%E3%83%95%E3%82%A3%E3%83%B3%E6%B3%A2%E6%83%85%E5%A0%B1/%E7%99%BD%E5%AD%90/' },
   { id:'ichinomiya',  name:'一宮',        pref:'chiba_north', prefName:'千葉北',
     lat:35.384, lon:140.373, facing:100, tideAmp:0.72, tideOfs:2.7,
-    feature:'東京五輪開催地・コンスタントな波質' },
+    feature:'東京五輪開催地・コンスタントな波質',
+    cam:'https://www.surfers-ocean.com/%E3%82%B5%E3%83%BC%E3%83%95%E3%82%A3%E3%83%B3%E6%B3%A2%E6%83%85%E5%A0%B1/%E4%B8%80%E5%AE%AE/' },
   { id:'shidashita',  name:'志田下',      pref:'chiba_north', prefName:'千葉北',
     lat:35.330, lon:140.375, facing:100, tideAmp:0.72, tideOfs:2.7,
-    feature:'2021年東京五輪会場・高品質な波' },
+    feature:'2021年東京五輪会場・高品質な波',
+    cam:'https://www.surfers-ocean.com/%E3%82%B5%E3%83%BC%E3%83%95%E3%82%A3%E3%83%B3%E6%B3%A2%E6%83%85%E5%A0%B1/%E5%BF%97%E7%94%B0%E4%B8%8B/' },
   { id:'ohara',       name:'大原',        pref:'chiba_north', prefName:'千葉北',
     lat:35.252, lon:140.382, facing:105, tideAmp:0.72, tideOfs:2.7,
     feature:'ロングボード向けメロウな波質' },
@@ -326,7 +338,8 @@ const SPOTS = [
   // ── 千葉南（外房・内房 北から南）──
   { id:'onjuku',      name:'御宿',        pref:'chiba_south', prefName:'千葉南',
     lat:35.133, lon:140.372, facing:112, tideAmp:0.75, tideOfs:2.8,
-    feature:'外房・水温高め・コンスタント' },
+    feature:'外房・水温高め・コンスタント',
+    cam:'https://www.surfers-ocean.com/%E3%82%B5%E3%83%BC%E3%83%95%E3%82%A3%E3%83%B3%E6%B3%A2%E6%83%85%E5%A0%B1/%E5%BE%A1%E5%AE%BF/' },
   { id:'katsuura',    name:'勝浦',        pref:'chiba_south', prefName:'千葉南',
     lat:35.135, lon:140.302, facing:120, tideAmp:0.75, tideOfs:2.8,
     feature:'外房の名スポット・多様な波質' },
@@ -557,17 +570,59 @@ function scoreWind(spd, dir, facing) {
   return Math.max(0, Math.min(25, Math.round(dScore*sf*25)));
 }
 
-function scoreCrowd(spot, dateObj, waveQuality) {
+// 日本の祝日・連休判定
+function jpHolidayFactor(dateObj) {
+  const y = dateObj.getFullYear();
+  const m = dateObj.getMonth()+1;
+  const d = dateObj.getDate();
+  const dow = dateObj.getDay();
+
+  // GW: 4/29〜5/6
+  if ((m===4&&d>=29)||(m===5&&d<=6)) return 1.6;
+  // お盆: 8/10〜8/18
+  if (m===8&&d>=10&&d<=18) return 1.5;
+  // 年末年始: 12/29〜1/3
+  if ((m===12&&d>=29)||(m===1&&d<=3)) return 1.3;
+  // シルバーウィーク（9月第3週前後）: 9/14〜9/23あたり
+  if (m===9&&d>=14&&d<=23) return 1.4;
+  // 固定祝日（平日なら+）
+  const holidays = [
+    [1,1],[1,11],[2,11],[2,23],[3,20],[4,29],
+    [5,3],[5,4],[5,5],[7,20],[8,11],[9,21],[10,14],
+    [11,3],[11,23],[12,23]
+  ];
+  for (const [hm,hd] of holidays) {
+    if (m===hm&&d===hd) return 1.4;
+    // 振替休日（祝日が日曜→翌月曜）
+    if (dow===1&&m===hm&&d===hd+1) return 1.4;
+  }
+  return 1.0;
+}
+
+function scoreCrowd(spot, dateObj, waveQuality, relF=1.0) {
   const dow  = dateObj.getDay();
   const hour = dateObj.getHours();
   const mon  = dateObj.getMonth()+1;
 
-  let base = dow===0||dow===6 ? 0.72 : dow===5 ? 0.50 : 0.30;
-  const season = (mon>=7&&mon<=9) ? 1.4 : (mon>=3&&mon<=5) ? 1.1 : 1.0;
-  const timeF  = hour<5 ? .02 : hour<7 ? .15 : hour<10 ? .90 : hour<14 ? 1.20 : hour<17 ? 1.00 : hour<19 ? .55 : hour<21 ? .20 : .03;
-  const waveF  = waveQuality>70 ? 1.35 : waveQuality>50 ? 1.15 : 0.80;
-  const level  = Math.min(1, base*season*timeF*waveF);
-  const score  = Math.max(0, Math.min(15, Math.round((1-level)*15)));
+  // 基本混雑度（曜日）
+  let base = dow===0||dow===6 ? 0.72 : dow===5 ? 0.52 : 0.30;
+
+  // 祝日・連休補正
+  const holidayF = jpHolidayFactor(dateObj);
+  if (holidayF > 1.0) base = Math.min(1.0, base * holidayF);
+
+  // 季節補正（夏は混む、冬は空く）
+  const season = (mon>=7&&mon<=9) ? 1.4 : (mon>=3&&mon<=6) ? 1.15 : (mon>=10) ? 0.85 : 0.80;
+
+  // 時間帯補正
+  const timeF = hour<5 ? .02 : hour<7 ? .15 : hour<10 ? .90 : hour<14 ? 1.20 : hour<17 ? 1.00 : hour<19 ? .55 : hour<21 ? .20 : .03;
+
+  // 波質補正（良い波 → 人が集まる）
+  const waveF = waveQuality>75 ? 1.40 : waveQuality>60 ? 1.20 : waveQuality>40 ? 1.00 : 0.75;
+
+  // 相対混雑補正（他スポットと比べた集中度）
+  const level = Math.min(1, base * season * timeF * waveF * relF);
+  const score = Math.max(0, Math.min(15, Math.round((1-level)*15)));
 
   return {
     score,
@@ -640,8 +695,48 @@ async function fetchSpot(spot) {
              swellHeight:sh, swellPeriod:sp,
              windSpeed:ws, windDir:wdir, windGust:wg,
              weatherCode:wcode, temperature:temp, seaTemp:sst,
+             waveQuality: hs+ps+ws2,   // 相対比較用に保持
              hs, ps, ws:ws2, crowd, total };
   });
+}
+
+// 全スポットデータ取得後に相対混雑を再計算
+function recalcRelativeCrowd() {
+  const spotIds = Object.keys(forecastData);
+  if (spotIds.length === 0) return;
+
+  // 時間スロット数（全スポット同じはず）
+  const slotCount = forecastData[spotIds[0]].length;
+
+  for (let i = 0; i < slotCount; i++) {
+    // この時間帯の全スポットの波質を収集
+    const qualities = spotIds.map(id => forecastData[id][i]?.waveQuality ?? 0);
+    const avg = qualities.reduce((a,b)=>a+b,0) / qualities.length;
+    // 標準偏差
+    const sd = Math.sqrt(qualities.map(q=>(q-avg)**2).reduce((a,b)=>a+b,0)/qualities.length);
+
+    spotIds.forEach((id, si) => {
+      const h = forecastData[id][i];
+      if (!h) return;
+      const spot = SPOTS.find(s=>s.id===id);
+      if (!spot) return;
+
+      // 平均からのずれ（標準偏差で正規化）
+      // +1σ以上 → 人が集中（relF=1.3）
+      // 平均付近 → 分散（relF=0.85）
+      // -1σ以下 → さらに人が来ない（relF=0.65）
+      const zScore = sd > 0 ? (h.waveQuality - avg) / sd : 0;
+      const relF = zScore > 1.0 ? 1.30
+                 : zScore > 0.3 ? 1.10
+                 : zScore > -0.3 ? 0.85
+                 : zScore > -1.0 ? 0.70
+                 : 0.60;
+
+      const crowd = scoreCrowd(spot, h.date, h.waveQuality, relF);
+      h.crowd = crowd;
+      h.total = calcTotal(h.hs, h.ps, h.ws, crowd.score);
+    });
+  }
 }
 
 async function loadAll() {
@@ -653,6 +748,7 @@ async function loadAll() {
   try {
     const results = await Promise.all(SPOTS.map(s => fetchSpot(s).then(h=>({id:s.id,hours:h}))));
     results.forEach(r => { forecastData[r.id] = r.hours; });
+    recalcRelativeCrowd();
     const now = new Date();
     sb.className='status-bar ok';
     sb.textContent=`更新: ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`;
@@ -796,7 +892,7 @@ function showMapDetail(spotId) {
         ${mkBar('波高 /50', rep.hs, 50, hc)}
         ${mkBar('周期 /25', rep.ps, 25, pc)}
         ${mkBar('風　 /25', rep.ws, 25, wc)}
-        ${mkBar('混雑 /15', rep.crowd.score, 15, cc2)}
+        ${mkBar('混雑予想 /15', rep.crowd.score, 15, cc2)}
       </div>
     </div>`;
   }
@@ -945,6 +1041,7 @@ function render() {
               ${tideTag}
               <span class="tag t-weather">${weatherEmoji(rep.weatherCode)} ${Math.round(rep.temperature)}℃</span>
               ${rep.seaTemp!=null?`<span class="tag t-sea">🌊 水温 ${Math.round(rep.seaTemp)}℃</span>`:''}
+              ${spot.cam?`<a class="cam-btn" href="${spot.cam}" target="_blank" rel="noopener" onclick="event.stopPropagation()">📷 ライブカメラ</a>`:''}
             </div>
           </div>
         </div>
@@ -974,7 +1071,7 @@ function render() {
           ${mkBar('波高 /50', rep.hs, 50, hc)}
           ${mkBar('周期 /25', rep.ps, 25, pc)}
           ${mkBar('風　 /25', rep.ws, 25, wc)}
-          ${mkBar('混雑 /15', rep.crowd.score, 15, cc2)}
+          ${mkBar('混雑予想 /15', rep.crowd.score, 15, cc2)}
         </div>
 
         <div class="tide-section">
